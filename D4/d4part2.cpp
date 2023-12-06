@@ -4,7 +4,7 @@
 #include <sstream>
 #include <regex>
 
-std::vector<int> vecOcur(6, 1);
+std::vector<int> vecOcur(219, 1);
 int currentIndex = 0;
 int countPoints(const std::string &input)
 {
@@ -29,13 +29,13 @@ int countPoints(const std::string &input)
     std::istringstream winningStream(winningCard);
     std::istringstream myCardStream(myCard);
 
-    for (size_t i = 0; i < 5; i++)
+    for (size_t i = 0; i < 10; i++)
     {
         int number;
         winningStream >> number;
         winningCardArr.push_back(number);
     }
-    for (size_t i = 0; i < 8; i++)
+    for (size_t i = 0; i < 25; i++)
     {
         int number;
         myCardStream >> number;
@@ -43,7 +43,7 @@ int countPoints(const std::string &input)
     }
     int res = 0;
     int numOfCard = 0;
-    for (size_t i = 0; i < 8; i++)
+    for (size_t i = 0; i < 25; i++)
     {
         if (std::find(winningCardArr.begin(), winningCardArr.end(), myCardArr[i]) != winningCardArr.end())
         {
@@ -61,23 +61,23 @@ int countPoints(const std::string &input)
         vecOcur[currentIndex + i] += 1;
     }
 
-    return res;
+    return numOfCard;
 }
 int main()
 {
     int res = 0;
-    std::ifstream file("test.txt");
-
+    std::ifstream file("puzzle.txt");
+    
     if (file.is_open())
     {
         std::string line;
         while (getline(file, line))
         {
+            std::cout << std::endl;
             for (size_t i = 0; i < vecOcur[currentIndex]; i++)
             {
                 int count = countPoints(line);
-                res += count;
-                std::cout << count << std::endl;
+                // std::cout << count << std::endl;
             }
             currentIndex++;
         }
@@ -87,12 +87,11 @@ int main()
     {
         std::cout << "Unable to open file." << std::endl;
     }
-    std::cout << "final: " << res << std::endl;
-
     for (size_t i = 0; i < vecOcur.size(); i++)
     {
-        std::cout << vecOcur[i] << std::endl;
+        res += vecOcur[i];
     }
-    
+    std::cout << "final: " << res << std::endl;
+
     return 0;
 }
